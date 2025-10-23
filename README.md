@@ -59,6 +59,15 @@ Note:
 * When you run the command `pip install -r requirements/cv.txt`, there might be some problems, like unable to find bmt_clipit, clip, panopticapi, videofeatures_clipit. And these errors can be ignored;
 * You need to install jibjpeg4py library and `jittor == 1.3.8.5`.
 
+> **Windows users: Pillow import error troubleshooting**  
+> Some users encounter `ImportError: DLL load failed while importing _imaging` when launching the PyTorch demo. This is caused by an incomplete Pillow installation or missing Microsoft Visual C++ runtime. A typical recovery flow is:  
+> 1. Install/repair [Microsoft Visual C++ Redistributable for Visual Studio 2015-2022](https://aka.ms/vs/17/release/vc_redist.x64.exe) and restart the terminal.  
+> 2. 重新在 Conda 环境中安装 Pillow：
+>    * 先更新 pip：`python -m pip install --upgrade pip setuptools wheel -i https://pypi.tuna.tsinghua.edu.cn/simple --trusted-host pypi.tuna.tsinghua.edu.cn`；
+>    * 再执行 `pip install pillow -i https://pypi.tuna.tsinghua.edu.cn/simple --trusted-host pypi.tuna.tsinghua.edu.cn`。如果仍然出现 SSL 错误，可改用 `pip install pillow --trusted-host pypi.org --trusted-host files.pythonhosted.org`；
+>    * 若网络限制导致所有在线安装失败，可在浏览器手动下载与你的 Python 版本匹配的离线 whl 包（例如 `Pillow‑10.2.0‑cp38‑cp38‑win_amd64.whl`，可从 [Gohlke 的 Windows whl 列表](https://www.lfd.uci.edu/~gohlke/pythonlibs/#pillow) 或清华镜像下载），然后使用 `pip install D:/path/to/Pillow-*.whl` 本地安装。
+> 3. Verify the installation with `python -c "from PIL import Image; print(Image.__version__)"` before re-running `python demo_detect_track.py`.
+
 ****
 ## Data Preparation
 
